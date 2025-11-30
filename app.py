@@ -8,9 +8,13 @@ def index():
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
-    pass
-    # TODO: Implement all maths operations, handle received data, send response
-
+    data = request.get_json()
+    expr = data.get('expression', '')
+    try:
+        result = eval(expr)
+        return jsonify({'result': result})
+    except Exception:
+        return jsonify({'error': 'ERROR'})
 
 if __name__ == '__main__':
     app.run(debug=True)
